@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Coin> _coins = [];
   List<Coin> _filteredCoins = [];
   bool _isLoading = true;
-  String _selectedFilter = 'all'; // all, favorites, gainers, losers
+  String _selectedFilter = 'all';
   String _searchQuery = '';
 
   final List<String> _filters = ['all', 'favorites', 'gainers', 'losers'];
@@ -34,18 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
     try {
-      // محاولة جلب البيانات من قاعدة البيانات المحلية أولاً
       List<Coin> localCoins = await DatabaseService.getAllCoins();
-      
       if (localCoins.isEmpty) {
-        // إذا كانت القاعدة فارغة، نجلب من API
         List<Coin> apiCoins = await ApiService.fetchCoins(perPage: 50);
         await DatabaseService.saveCoins(apiCoins);
         _coins = apiCoins;
       } else {
         _coins = localCoins;
       }
-      
       _applyFilters();
     } catch (e) {
       print('Error loading data: $e');
@@ -56,8 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _applyFilters() {
     List<Coin> result = _coins;
-
-    // تطبيق البحث
     if (_searchQuery.isNotEmpty) {
       result = result.where((coin) => 
         coin.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
@@ -65,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ).toList();
     }
 
-    // تطبيق الفلتر
     switch (_selectedFilter) {
       case 'favorites':
         result = result.where((coin) => coin.isFavorite).toList();
@@ -79,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
         result.sort((a, b) => a.priceChangePercentage24h.compareTo(b.priceChangePercentage24h));
         break;
     }
-
     setState(() => _filteredCoins = result);
   }
 
@@ -90,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // شريط البحث
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
@@ -99,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _applyFilters();
                 },
                 decoration: InputDecoration(
-                  hintText: T('search'),
+                  hintText: AppTranslations.translate('search'), // التصحيح هنا
                   prefixIcon: const Icon(Icons.search, color: AppTheme.textTertiary),
                   filled: true,
                   fillColor: AppTheme.bgSecondary,
@@ -110,8 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-
-            // أزرار التصفية
             SizedBox(
               height: 40,
               child: ListView.separated(
@@ -121,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 separatorBuilder: (_, __) => const SizedBox(width: 8),
                 itemBuilder: (context, index) {
                   final filter = _filters[index];
-                  // ترجمة الفلتر
                   String label = filter == 'all' ? 'الكل' : 
                                  filter == 'favorites' ? 'المفضلة' :
                                  filter == 'gainers' ? 'الأعلى ربحاً' : 'الأعلى خسارة';
@@ -138,18 +126,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // بانر الأخبار (ثابت حالياً)
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: NewsBanner(
                 title: 'بيتكوين يتجاوز حاجز 70,000 دولار وسط تفاؤل المستثمرين',
                 source: 'CryptoNews • منذ ساعة',
-                onTap: null,
               ),
             ),
-
-            // قائمة العملات
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator(color: AppTheme.accentGreen))
