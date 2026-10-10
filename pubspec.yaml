@@ -1,5 +1,5 @@
-name: app
-description: A professional task manager built with Flutter.
+name: crypto_track
+description: A professional cryptocurrency tracker built with Flutter.
 publish_to: 'none'
 version: 1.0.0+1
 
