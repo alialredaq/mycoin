@@ -26,7 +26,6 @@ class _ImportScreenState extends State<ImportScreen> {
       return;
     }
 
-    // تقسيم النص إلى أسطر وأخذ الرمز (أول كلمة في كل سطر)
     List<String> lines = text.split('\n');
     List<Coin> newCoins = [];
     
@@ -36,7 +35,7 @@ class _ImportScreenState extends State<ImportScreen> {
         newCoins.add(Coin(
           id: symbol.toLowerCase(),
           symbol: symbol,
-          name: symbol, // سيتم تحديثه لاحقاً من API
+          name: symbol,
           currentPrice: 0,
         ));
       }
@@ -47,7 +46,6 @@ class _ImportScreenState extends State<ImportScreen> {
       _showMessage('تم استيراد ${newCoins.length} عملة بنجاح');
       _pasteController.clear();
     }
-    
     setState(() => _isImporting = false);
   }
 
@@ -84,13 +82,12 @@ class _ImportScreenState extends State<ImportScreen> {
     return Scaffold(
       backgroundColor: AppTheme.bgPrimary,
       appBar: AppBar(
-        title: Text(T('import_coins')),
+        title: const T('import_coins'), // التصحيح هنا
         backgroundColor: AppTheme.bgPrimary,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // قسم اللصق
           const Text('استيراد من قائمة (رمز في كل سطر)', style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           TextField(
@@ -112,8 +109,6 @@ class _ImportScreenState extends State<ImportScreen> {
             ),
           ),
           const Divider(height: 32, color: AppTheme.bgTertiary),
-          
-          // قسم الإضافة اليدوية
           const Text('إضافة يدوية', style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           TextField(
