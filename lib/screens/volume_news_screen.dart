@@ -7,7 +7,6 @@ class VolumeNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // بيانات وهمية للعرض
     final List<Map<String, String>> mockNews = [
       {'title': 'ارتفاع حجم التداول على بيتكوين بنسبة 20%', 'source': 'CryptoDaily', 'volume': '+20%'},
       {'title': 'انخفاض مفاجئ في حجم تداول الإيثريوم', 'source': 'CoinTelegraph', 'volume': '-15%'},
@@ -17,7 +16,7 @@ class VolumeNewsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.bgPrimary,
       appBar: AppBar(
-        title: Text(T('news')),
+        title: const T('news'), // التصحيح هنا
         backgroundColor: AppTheme.bgPrimary,
       ),
       body: ListView.builder(
