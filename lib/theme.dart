@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const primary = Color(0xFF5B6BF5);
-  static const secondary = Color(0xFFFF8A65);
+  // ألوان العملات الرقمية
+  static const primary = Color(0xFF00C853); // أخضر للارتفاع
+  static const secondary = Color(0xFFFF1744); // أحمر للانخفاض
+  static const accent = Color(0xFF2979FF); // أزرق مميز
   static const ink = Color(0xFF1E2233);
   static const bgLight = Color(0xFFF7F8FC);
-  static const bgDark = Color(0xFF111421);
+  static const bgDark = Color(0xFF0A0E27); // أزرق داكن جداً مثل Binance
 
   static const primaryGradient = LinearGradient(
-    colors: [Color(0xFF5B6BF5), Color(0xFF7C5BFF)],
+    colors: [Color(0xFF00C853), Color(0xFF00E676)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -94,9 +96,9 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: primary,
       brightness: Brightness.dark,
-      primary: const Color(0xFF7C8AFF),
+      primary: const Color(0xFF00E676),
       secondary: secondary,
-      surface: const Color(0xFF1A1E2E),
+      surface: const Color(0xFF1A1F3A),
     ),
     scaffoldBackgroundColor: bgDark,
     appBarTheme: const AppBarTheme(
@@ -113,20 +115,20 @@ class AppTheme {
     cardTheme: const CardThemeData(
       elevation: 0,
       margin: EdgeInsets.zero,
-      color: Color(0xFF1A1E2E),
+      color: Color(0xFF1A1F3A),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(24)),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF1A1E2E),
+      backgroundColor: const Color(0xFF1A1F3A),
       elevation: 0,
       height: 68,
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       indicatorColor: primary.withValues(alpha: 0.25),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: const Color(0xFF1A1E2E),
+      backgroundColor: const Color(0xFF1A1F3A),
       selectedColor: primary.withValues(alpha: 0.35),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(
@@ -136,7 +138,7 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFF1A1E2E),
+      fillColor: const Color(0xFF1A1F3A),
       contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       border: OutlineInputBorder(
         borderSide: BorderSide.none,
@@ -147,7 +149,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(20),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Color(0xFF7C8AFF), width: 1.5),
+        borderSide: const BorderSide(color: Color(0xFF00E676), width: 1.5),
         borderRadius: BorderRadius.circular(20),
       ),
     ),
