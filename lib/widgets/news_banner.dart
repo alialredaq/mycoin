@@ -4,24 +4,24 @@ import '../theme.dart';
 class NewsBanner extends StatelessWidget {
   final String title;
   final String source;
-  final VoidCallback onTap;
+  final VoidCallback? onTap; // تم جعلها اختيارية لتجنب خطأ null
 
   const NewsBanner({
     super.key,
     required this.title,
     required this.source,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap ?? () {}, // قيمة افتراضية آمنة في حال لم يتم تمرير دالة
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               AppTheme.bgSecondary,
               AppTheme.bgTertiary,
