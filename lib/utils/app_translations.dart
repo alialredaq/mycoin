@@ -83,16 +83,17 @@ class AppTranslations {
 }
 
 // Widget مساعد لاستخدام الترجمة بسهولة
+// تم تغيير اسم المتغير من key إلى textKey لتجنب التعارض مع Widget.key
 class T extends StatelessWidget {
-  final String key;
+  final String textKey;
   final TextStyle? style;
 
-  const T(this.key, {super.key, this.style});
+  const T(this.textKey, {super.key, this.style});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      AppTranslations.translate(key),
+      AppTranslations.translate(textKey),
       style: style,
     );
   }
