@@ -33,12 +33,11 @@ class _AlertsScreenState extends State<AlertsScreen> {
   }
 
   void _showAddAlertDialog() {
-    // نموذج بسيط لإضافة تنبيه (يمكن توسيعه لاحقاً)
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppTheme.bgSecondary,
-        title: const Text('إضافة تنبيه جديد', style: TextStyle(color: AppTheme.textPrimary)),
+        title: const T('alerts', style: TextStyle(color: AppTheme.textPrimary)),
         content: const Text('سيتم إضافة نموذج كامل لاحقاً لاختيار العملة ونوع التنبيه.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إغلاق')),
@@ -52,7 +51,7 @@ class _AlertsScreenState extends State<AlertsScreen> {
     return Scaffold(
       backgroundColor: AppTheme.bgPrimary,
       appBar: AppBar(
-        title: Text(T('alerts')),
+        title: const T('alerts'), // التصحيح هنا
         backgroundColor: AppTheme.bgPrimary,
       ),
       floatingActionButton: FloatingActionButton(
