@@ -17,6 +17,7 @@ dependencies:
   sqflite: ^2.3.0
   path_provider: ^2.1.1
   path: ^1.8.3
+  url_launcher: ^6.2.1 # تمت الإضافة
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +26,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # سنضيف ملفات الترجمة لاحقاً في assets
-  # assets:
-  #   - assets/translations/
