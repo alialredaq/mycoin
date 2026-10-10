@@ -1,169 +1,88 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // ألوان العملات الرقمية
-  static const primary = Color(0xFF00C853); // أخضر للارتفاع
-  static const secondary = Color(0xFFFF1744); // أحمر للانخفاض
-  static const accent = Color(0xFF2979FF); // أزرق مميز
-  static const ink = Color(0xFF1E2233);
-  static const bgLight = Color(0xFFF7F8FC);
-  static const bgDark = Color(0xFF0A0E27); // أزرق داكن جداً مثل Binance
+  static const Color bgPrimary = Color(0xFF0A0A0A);
+  static const Color bgSecondary = Color(0xFF1A1A1A);
+  static const Color bgTertiary = Color(0xFF252525);
 
-  static const primaryGradient = LinearGradient(
-    colors: [Color(0xFF00C853), Color(0xFF00E676)],
+  static const Color accentGreen = Color(0xFF00E676);
+  static const Color accentRed = Color(0xFFFF1744);
+  static const Color accentGold = Color(0xFFFFD700);
+  static const Color accentBlue = Color(0xFF2979FF);
+
+  static const Color textPrimary = Color(0xFFFFFFFF);
+  static const Color textSecondary = Color(0xFFB0B0B0);
+  static const Color textTertiary = Color(0xFF757575);
+
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [Color(0xFF00E676), Color(0xFF00C853)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-  );
-
-  static ThemeData light = ThemeData(
-    useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primary,
-      primary: primary,
-      secondary: secondary,
-      surface: Colors.white,
-    ),
-    scaffoldBackgroundColor: bgLight,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      centerTitle: false,
-      titleTextStyle: TextStyle(
-        color: ink,
-        fontSize: 26,
-        fontWeight: FontWeight.w900,
-      ),
-    ),
-    cardTheme: const CardThemeData(
-      elevation: 0,
-      margin: EdgeInsets.zero,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-      ),
-    ),
-    navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      height: 68,
-      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorColor: primary.withValues(alpha: 0.12),
-    ),
-    chipTheme: ChipThemeData(
-      backgroundColor: Colors.white,
-      selectedColor: primary.withValues(alpha: 0.15),
-      side: BorderSide.none,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
-      labelStyle: const TextStyle(fontWeight: FontWeight.w600),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-      border: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: primary, width: 1.5),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        textStyle: const TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 15,
-        ),
-      ),
-    ),
   );
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primary,
-      brightness: Brightness.dark,
-      primary: const Color(0xFF00E676),
-      secondary: secondary,
-      surface: const Color(0xFF1A1F3A),
+    scaffoldBackgroundColor: bgPrimary,
+    colorScheme: const ColorScheme.dark(
+      primary: accentGreen,
+      secondary: accentRed,
+      surface: bgSecondary,
+      onSurface: textPrimary,
+      onSurfaceVariant: textSecondary,
     ),
-    scaffoldBackgroundColor: bgDark,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
+      backgroundColor: bgPrimary,
       elevation: 0,
       scrolledUnderElevation: 0,
-      centerTitle: false,
-      titleTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 26,
-        fontWeight: FontWeight.w900,
-      ),
+      centerTitle: true,
+      titleTextStyle: TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.bold),
+      iconTheme: IconThemeData(color: textPrimary),
     ),
     cardTheme: const CardThemeData(
       elevation: 0,
       margin: EdgeInsets.zero,
-      color: Color(0xFF1A1F3A),
+      color: bgSecondary,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        side: BorderSide(color: bgTertiary, width: 1),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF1A1F3A),
+      backgroundColor: bgSecondary,
       elevation: 0,
-      height: 68,
+      height: 70,
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorColor: primary.withValues(alpha: 0.25),
-    ),
-    chipTheme: ChipThemeData(
-      backgroundColor: const Color(0xFF1A1F3A),
-      selectedColor: primary.withValues(alpha: 0.35),
-      side: BorderSide.none,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
-      labelStyle: const TextStyle(fontWeight: FontWeight.w600),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: const Color(0xFF1A1F3A),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-      border: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Color(0xFF00E676), width: 1.5),
-        borderRadius: BorderRadius.circular(20),
+      indicatorColor: accentGreen,
+      labelTextStyle: MaterialStateProperty.all(
+        const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: textSecondary),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        textStyle: const TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 15,
-        ),
+        backgroundColor: accentGreen,
+        foregroundColor: bgPrimary,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: bgSecondary,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(12)),
+      enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: bgTertiary), borderRadius: BorderRadius.circular(12)),
+      focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: accentGreen, width: 1.5), borderRadius: BorderRadius.circular(12)),
+      hintStyle: const TextStyle(color: textTertiary),
+    ),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 28),
+      headlineMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 22),
+      titleLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 18),
+      bodyLarge: TextStyle(color: textPrimary, fontSize: 16),
+      bodyMedium: TextStyle(color: textSecondary, fontSize: 14),
+      labelMedium: TextStyle(color: textTertiary, fontSize: 12),
     ),
   );
 }
