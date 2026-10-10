@@ -6,448 +6,177 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppStore.init();
-  runApp(const ManhajApp());
+  runApp(const CryptoTrackApp());
 }
 
-class Lesson {
-  const Lesson({
-    required this.title,
-    required this.duration,
-    required this.content,
-  });
-
-  final String title;
-  final int duration;
-  final String content;
-
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'duration': duration,
-        'content': content,
-      };
-
-  factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
-        title: j['title'] as String,
-        duration: j['duration'] as int,
-        content: j['content'] as String,
-      );
-}
-
-class Course {
-  const Course({
+class Coin {
+  const Coin({
     required this.id,
-    required this.title,
-    required this.instructor,
+    required this.name,
+    required this.symbol,
+    required this.price,
+    required this.change24h,
+    required this.marketCap,
+    required this.volume24h,
     required this.category,
-    required this.level,
-    required this.hours,
-    required this.rating,
-    required this.students,
-    required this.description,
-    required this.color,
-    required this.lessons,
+    required this.icon,
   });
 
   final int id;
-  final String title;
-  final String instructor;
+  final String name;
+  final String symbol;
+  final double price;
+  final double change24h;
+  final double marketCap;
+  final double volume24h;
   final String category;
-  final String level;
-  final int hours;
-  final double rating;
-  final int students;
-  final String description;
-  final Color color;
-  final List<Lesson> lessons;
+  final IconData icon;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'symbol': symbol,
+        'price': price,
+        'change24h': change24h,
+        'marketCap': marketCap,
+        'volume24h': volume24h,
+        'category': category,
+      };
+
+  factory Coin.fromJson(Map<String, dynamic> j) => Coin(
+        id: j['id'] as int,
+        name: j['name'] as String,
+        symbol: j['symbol'] as String,
+        price: (j['price'] as num).toDouble(),
+        change24h: (j['change24h'] as num).toDouble(),
+        marketCap: (j['marketCap'] as num).toDouble(),
+        volume24h: (j['volume24h'] as num).toDouble(),
+        category: j['category'] as String,
+        icon: Icons.currency_bitcoin,
+      );
 }
 
-const courses = <Course>[
-  Course(
+const coins = <Coin>[
+  Coin(
     id: 1,
-    title: 'mycoin',
-    instructor: 'م. أحمد',
-    category: 'برمجة',
-    level: 'مبتدئ',
-    hours: 12,
-    rating: 4.9,
-    students: 3420,
-    description:
-        'تعلم أساسيات لغة Dart من الصفر حتى بناء تطبيقات حقيقية. تغطي الدورة المتغيرات، الدوال، الكائنات، والتعامل مع القوائم.',
-    color: Color(0xFF5B6BF5),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 15,
-        content:
-            'تعرف على لغة Dart ولماذا تعد الخيار الأول لتطوير تطبيقات Flutter. سنتعرف على تاريخ اللغة، مميزاتها، وأدوات التطوير الأساسية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'شرح مفصل للمتغيرات في Dart: int, double, String, bool. الفرق بين var و final و const، وكيفية استخدام كل منها بشكل صحيح.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'استخدام if-else و switch للتحكم في تدفق البرنامج. حلقات for و while و do-while مع أمثلة عملية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 20,
-        content:
-            'تعريف الدوال، المعاملات الإلزامية والاختيارية، القيم المرجعة، الدوال السهمية، والدوال المجهولة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 28,
-        content:
-            'التعامل مع List و Map و Set. إضافة العناصر، حذفها، والمرور عليها باستخدام أساليب حديثة مثل map و where و fold.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 30,
-        content:
-            'أساسيات OOP في Dart: الكلاسات، الكائنات، الوراثة، الواجهات، والكلاسات المجردة.',
-      ),
-    ],
+    name: 'Bitcoin',
+    symbol: 'BTC',
+    price: 67432.50,
+    change24h: 2.34,
+    marketCap: 1320000000000,
+    volume24h: 28500000000,
+    category: 'Layer 1',
+    icon: Icons.currency_bitcoin,
   ),
-  Course(
+  Coin(
     id: 2,
-    title: 'mycoin',
-    instructor: 'أ. سارة',
-    category: 'تصميم',
-    level: 'متوسط',
-    hours: 15,
-    rating: 4.8,
-    students: 2180,
-    description:
-        'اكتشف مبادئ تصميم واجهات المستخدم UI/UX الحديثة وكيفية تطبيقها بأدوات عملية لإنشاء تجارب استخدام مميزة.',
-    color: Color(0xFFFF8A65),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 18,
-        content:
-            'المحاذاة، التقارب، التسلسل الهرمي، والتباين. كيف تجعل التصميم متنفساً وسهل القراءة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'اختيار الألوان المتناسقة، عجلة الألوان، والنفسيولوجية اللونية في تطبيقات الجوال.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 20,
-        content:
-            'اختيار الخطوط العربية والإنجليزية، أحجام الخطوط، والمسافات بين الأسطر.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'تصميم واجهات تعمل على أحجام شاشات مختلفة من الجوال إلى التابلت.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 24,
-        content:
-            'كيفية إضافة أنيميشن سلس يعزز تجربة المستخدم دون إثقال الأداء.',
-      ),
-    ],
+    name: 'Ethereum',
+    symbol: 'ETH',
+    price: 3521.80,
+    change24h: -1.25,
+    marketCap: 423000000000,
+    volume24h: 15200000000,
+    category: 'Layer 1',
+    icon: Icons.currency_exchange,
   ),
-  Course(
+  Coin(
     id: 3,
-    title: 'mycoin',
-    instructor: 'د. خالد',
-    category: 'أعمال',
-    level: 'مبتدئ',
-    hours: 10,
-    rating: 4.7,
-    students: 1850,
-    description:
-        'استراتيجيات التسويق الرقمي الحديثة: السوشيال ميديا، الإعلانات المدفوعة، SEO، والمحتوى.',
-    color: Color(0xFF3EB489),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 15,
-        content:
-            'تعريف التسويق الرقمي، الفرق بينه وبين التسويق التقليدي، وقنوات التسويق الرئيسية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'بناء حضور فعّال على Instagram و TikTok و Twitter. أنواع المحتوى وتوقيت النشر.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 26,
-        content:
-            'إطلاق حملات على Google Ads و Meta Ads. تحديد الميزانية، الاستهداف، وقياس النتائج.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 24,
-        content:
-            'كيف تتصدر نتائج البحث، الكلمات المفتاحية، والمحتوى الذي يحبه Google.',
-      ),
-    ],
+    name: 'Binance Coin',
+    symbol: 'BNB',
+    price: 598.40,
+    change24h: 0.87,
+    marketCap: 89000000000,
+    volume24h: 1800000000,
+    category: 'Exchange',
+    icon: Icons.account_balance_wallet,
   ),
-  Course(
+  Coin(
     id: 4,
-    title: 'mycoin',
-    instructor: 'أ. نورة',
-    category: 'لغات',
-    level: 'مبتدئ',
-    hours: 18,
-    rating: 4.9,
-    students: 5230,
-    description:
-        'بناء مهارات التحدث بالإنجليزية من الصفر بأنماط تفاعلية ومفردات الحياة اليومية.',
-    color: Color(0xFF9C6BFF),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 14,
-        content:
-            'كيف تعرف بنفسك بالإنجليزية: الاسم، العمل، الهوايات، والأهداف.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 18,
-        content:
-            'عبارات أساسية تستخدمها في المطعم، المطار، الفندق، والتسوق.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'Present Simple، Past Simple، Future. متى تستخدم كل زمن مع أمثلة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 20,
-        content:
-            'أهم 500 كلمة إنجليزية تستخدم في المحادثات اليومية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'مخارج الحروف الإنجليزية، الأصوات الصامتة، والنغمة الصحيحة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 28,
-        content:
-            'محادثة كاملة مع ناطق أصلي، تحليل العبارات، وتدريب عملي.',
-      ),
-    ],
+    name: 'Solana',
+    symbol: 'SOL',
+    price: 142.65,
+    change24h: 5.12,
+    marketCap: 63000000000,
+    volume24h: 3200000000,
+    category: 'Layer 1',
+    icon: Icons.bolt,
   ),
-  Course(
+  Coin(
     id: 5,
-    title: 'mycoin',
-    instructor: 'م. عبدالله',
-    category: 'أعمال',
-    level: 'متقدم',
-    hours: 14,
-    rating: 4.8,
-    students: 1240,
-    description:
-        'منهجيات إدارة المشاريع الحديثة Agile و Scrum مع تطبيقات عملية وأدوات احترافية.',
-    color: Color(0xFFFFB300),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 16,
-        content:
-            'تعريف المشروع، دورة الحياة، وأدوار فريق العمل.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 24,
-        content:
-            'مبادئ Agile الأربعة، الفرق بينها وبين الإدارة التقليدية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 28,
-        content:
-            'Sprint، Daily Standup، Retrospective. كيف تطبق Scrum بشكل صحيح.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 20,
-        content:
-            'Jira، Trello، Asana. كيفية اختيار الأداة المناسبة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'تحديد المخاطر، تقييمها، ووضع خطط للتعامل معها.',
-      ),
-    ],
+    name: 'Cardano',
+    symbol: 'ADA',
+    price: 0.4523,
+    change24h: -2.18,
+    marketCap: 16000000000,
+    volume24h: 420000000,
+    category: 'Layer 1',
+    icon: Icons.hexagon,
   ),
-  Course(
+  Coin(
     id: 6,
-    title: 'mycoin',
-    instructor: 'أ. محمد',
-    category: 'علوم',
-    level: 'متوسط',
-    hours: 20,
-    rating: 4.6,
-    students: 2960,
-    description:
-        'شرح مبسط لمنهج الرياضيات للثانوية: التفاضل، التكامل، والمتتابعات.',
-    color: Color(0xFF00ACC1),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'المتتابعات الحسابية والهندسية، الحد العام، والمجموع.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'مفهوم النهاية، النهايات عند اللانهاية، وحالات عدم التعيين.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 28,
-        content:
-            'قواعد الاشتقاق، مشتقة الدوال المركبة، وتطبيقات هندسية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 30,
-        content:
-            'التكامل غير المحدد والمحدد، تطبيقات المساحات والحجوم.',
-      ),
-    ],
+    name: 'Ripple',
+    symbol: 'XRP',
+    price: 0.5234,
+    change24h: 1.45,
+    marketCap: 28000000000,
+    volume24h: 1100000000,
+    category: 'Payment',
+    icon: Icons.send,
   ),
-  Course(
+  Coin(
     id: 7,
-    title: 'mycoin',
-    instructor: 'أ. ريم',
-    category: 'تصميم',
-    level: 'مبتدئ',
-    hours: 8,
-    rating: 4.7,
-    students: 1420,
-    description:
-        'أساسيات التصوير الاحترافي: الإضاءة، التكوين، والمعالجة بأدوات حديثة.',
-    color: Color(0xFFE91E63),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 18,
-        content:
-            'ISO، Shutter Speed، Aperture. كيف تتحكم بالكاميرا يدوياً.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 20,
-        content:
-            'قاعدة الثلث، الخطوط الموجهة، التوازن البصري.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'استغلال ضوء الشمس، الساعة الذهبية، والظلال.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'تحرير الصور باستخدام Lightroom و Snapseed.',
-      ),
-    ],
+    name: 'Polkadot',
+    symbol: 'DOT',
+    price: 7.23,
+    change24h: -0.56,
+    marketCap: 9500000000,
+    volume24h: 280000000,
+    category: 'Layer 0',
+    icon: Icons.circle,
   ),
-  Course(
+  Coin(
     id: 8,
-    title: 'mycoin',
-    instructor: 'م. فيصل',
-    category: 'برمجة',
-    level: 'متوسط',
-    hours: 16,
-    rating: 4.8,
-    students: 1980,
-    description:
-        'تعرف على أساسيات الأمن السيبراني وكيفية حماية الأنظمة والبيانات من الهجمات.',
-    color: Color(0xFF37474F),
-    lessons: [
-      Lesson(
-        title: 'mycoin',
-        duration: 18,
-        content:
-            'مفاهيم أساسية، أنواع المهاجمين، والتهديدات الشائعة.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 25,
-        content:
-            'التشفير المتماثل وغير المتماثل، HTTPS، والشهادات الرقمية.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 24,
-        content:
-            'الجدر النارية، VPN، وكشف التسلل.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 28,
-        content:
-            'منهجية اختبار الاختراق الأخلاقي وأدوات Kali Linux.',
-      ),
-      Lesson(
-        title: 'mycoin',
-        duration: 22,
-        content:
-            'خطة الاستجابة، التحليل الجنائي، والتعافي.',
-      ),
-    ],
+    name: 'Dogecoin',
+    symbol: 'DOGE',
+    price: 0.0892,
+    change24h: 3.67,
+    marketCap: 12700000000,
+    volume24h: 650000000,
+    category: 'Meme',
+    icon: Icons.pets,
   ),
 ];
 
 class AppStore {
   static late SharedPreferences prefs;
 
-  static const _kName = 'manhaj_username';
-  static const _kDark = 'manhaj_dark';
-  static const _kEnrolled = 'manhaj_enrolled';
-  static const _kCompleted = 'manhaj_completed';
+  static const _kName = 'crypto_username';
+  static const _kDark = 'crypto_dark';
+  static const _kWatchlist = 'crypto_watchlist';
+  static const _kPortfolio = 'crypto_portfolio';
 
   static String username = '';
   static bool isDark = false;
-  static Set<int> enrolled = {};
-  static Map<int, Set<int>> completed = {};
+  static Set<int> watchlist = {};
+  static Map<int, double> portfolio = {};
 
   static Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
     username = prefs.getString(_kName) ?? '';
     isDark = prefs.getBool(_kDark) ?? false;
 
-    final enrolledRaw = prefs.getString(_kEnrolled);
-    if (enrolledRaw != null) {
-      enrolled = (jsonDecode(enrolledRaw) as List).cast<int>().toSet();
+    final watchlistRaw = prefs.getString(_kWatchlist);
+    if (watchlistRaw != null) {
+      watchlist = (jsonDecode(watchlistRaw) as List).cast<int>().toSet();
     }
 
-    final completedRaw = prefs.getString(_kCompleted);
-    if (completedRaw != null) {
-      final map = jsonDecode(completedRaw) as Map<String, dynamic>;
-      completed = map.map(
+    final portfolioRaw = prefs.getString(_kPortfolio);
+    if (portfolioRaw != null) {
+      final map = jsonDecode(portfolioRaw) as Map<String, dynamic>;
+      portfolio = map.map(
         (k, v) => MapEntry(
           int.parse(k),
-          (v as List).cast<int>().toSet(),
+          (v as num).toDouble(),
         ),
       );
     }
@@ -463,82 +192,62 @@ class AppStore {
     await prefs.setBool(_kDark, value);
   }
 
-  static Future<void> saveEnrolled() async {
-    await prefs.setString(_kEnrolled, jsonEncode(enrolled.toList()));
+  static Future<void> saveWatchlist() async {
+    await prefs.setString(_kWatchlist, jsonEncode(watchlist.toList()));
   }
 
-  static Future<void> saveCompleted() async {
-    final encoded = completed.map(
-      (k, v) => MapEntry(k.toString(), v.toList()),
-    );
-    await prefs.setString(_kCompleted, jsonEncode(encoded));
+  static Future<void> savePortfolio() async {
+    await prefs.setString(_kPortfolio, jsonEncode(portfolio));
   }
 
-  static void toggleEnroll(int courseId) {
-    if (enrolled.contains(courseId)) {
-      enrolled.remove(courseId);
-      completed.remove(courseId);
+  static void toggleWatchlist(int coinId) {
+    if (watchlist.contains(coinId)) {
+      watchlist.remove(coinId);
     } else {
-      enrolled.add(courseId);
+      watchlist.add(coinId);
     }
-    saveEnrolled();
-    saveCompleted();
+    saveWatchlist();
   }
 
-  static bool isLessonCompleted(int courseId, int lessonIndex) {
-    return completed[courseId]?.contains(lessonIndex) ?? false;
+  static void addToPortfolio(int coinId, double amount) {
+    portfolio[coinId] = (portfolio[coinId] ?? 0) + amount;
+    savePortfolio();
   }
 
-  static void toggleLesson(int courseId, int lessonIndex) {
-    completed.putIfAbsent(courseId, () => {});
-    if (completed[courseId]!.contains(lessonIndex)) {
-      completed[courseId]!.remove(lessonIndex);
-    } else {
-      completed[courseId]!.add(lessonIndex);
-    }
-    saveCompleted();
-  }
-
-  static double progress(int courseId) {
-    final course = courses.firstWhere((c) => c.id == courseId);
-    final done = completed[courseId]?.length ?? 0;
-    return done / course.lessons.length;
-  }
-
-  static int completedLessonsCount(int courseId) {
-    return completed[courseId]?.length ?? 0;
-  }
-
-  static int totalPoints() {
-    int total = 0;
-    for (final entry in completed.entries) {
-      total += entry.value.length * 10;
-    }
+  static double portfolioValue() {
+    double total = 0;
+    portfolio.forEach((coinId, amount) {
+      final coin = coins.firstWhere((c) => c.id == coinId);
+      total += coin.price * amount;
+    });
     return total;
   }
 
-  static int completedCoursesCount() {
+  static double portfolioChange() {
+    double totalChange = 0;
     int count = 0;
-    for (final courseId in enrolled) {
-      if (progress(courseId) >= 1.0) count++;
-    }
-    return count;
+    portfolio.forEach((coinId, amount) {
+      final coin = coins.firstWhere((c) => c.id == coinId);
+      totalChange += coin.change24h;
+      count++;
+    });
+    return count > 0 ? totalChange / count : 0;
   }
 }
 
-class ManhajApp extends StatefulWidget {
-  const ManhajApp({super.key});
+class CryptoTrackApp extends StatefulWidget {
+  const CryptoTrackApp({super.key});
 
   @override
-  State<ManhajApp> createState() => _ManhajAppState();
+  State<CryptoTrackApp> createState() => _CryptoTrackAppState();
 }
 
-class _ManhajAppState extends State<ManhajApp> {
+class _CryptoTrackAppState extends State<CryptoTrackApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'mycoin',
+      title: 'CryptoTrack',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: AppStore.isDark ? ThemeMode.dark : ThemeMode.light,
@@ -549,7 +258,7 @@ class _ManhajAppState extends State<ManhajApp> {
                 setState(() {});
               },
             )
-          : ManhajHome(
+          : CryptoHome(
               onThemeChanged: () => setState(() {}),
               onReset: () => setState(() {}),
             ),
@@ -614,21 +323,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       borderRadius: BorderRadius.circular(22),
                     ),
                     child: const Icon(
-                      Icons.school_outlined,
+                      Icons.currency_bitcoin,
                       color: Colors.white,
                       size: 40,
                     ),
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'أهلاً بك في منهاج',
+                    'أهلاً بك في CryptoTrack',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'رحلة تعليمية مصممة لتنمية مهاراتك خطوة بخطوة',
+                    'تتبع أسعار العملات الرقمية وإدارة محفظتك بسهولة',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       height: 1.6,
@@ -671,8 +380,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 }
 
-class ManhajHome extends StatefulWidget {
-  const ManhajHome({
+class CryptoHome extends StatefulWidget {
+  const CryptoHome({
     super.key,
     required this.onThemeChanged,
     required this.onReset,
@@ -682,29 +391,28 @@ class ManhajHome extends StatefulWidget {
   final VoidCallback onReset;
 
   @override
-  State<ManhajHome> createState() => _ManhajHomeState();
+  State<CryptoHome> createState() => _CryptoHomeState();
 }
 
-class _ManhajHomeState extends State<ManhajHome> {
+class _CryptoHomeState extends State<CryptoHome> {
   int _tab = 0;
   String _query = '';
   String _category = 'الكل';
 
   final _categories = const [
     'الكل',
-    'برمجة',
-    'تصميم',
-    'أعمال',
-    'لغات',
-    'علوم',
+    'Layer 1',
+    'DeFi',
+    'NFT',
+    'Meme',
+    'Payment',
   ];
 
-  List<Course> get _filtered => courses.where((c) {
+  List<Coin> get _filtered => coins.where((c) {
         final matchCat = _category == 'الكل' || c.category == _category;
         final matchQuery = _query.isEmpty ||
-            c.title.contains(_query) ||
-            c.instructor.contains(_query) ||
-            c.category.contains(_query);
+            c.name.toLowerCase().contains(_query.toLowerCase()) ||
+            c.symbol.toLowerCase().contains(_query.toLowerCase());
         return matchCat && matchQuery;
       }).toList();
 
@@ -712,7 +420,7 @@ class _ManhajHomeState extends State<ManhajHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('منهاج'),
+        title: const Text('CryptoTrack'),
         actions: [
           IconButton(
             tooltip: 'الوضع الليلي',
@@ -739,8 +447,8 @@ class _ManhajHomeState extends State<ManhajHome> {
         index: _tab,
         children: [
           _homeTab(),
-          _exploreTab(),
-          _myCoursesTab(),
+          _marketTab(),
+          _portfolioTab(),
           _profileTab(),
         ],
       ),
@@ -754,14 +462,14 @@ class _ManhajHomeState extends State<ManhajHome> {
             label: 'الرئيسية',
           ),
           NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore),
-            label: 'استكشاف',
+            icon: Icon(Icons.trending_up_outlined),
+            selectedIcon: Icon(Icons.trending_up),
+            label: 'السوق',
           ),
           NavigationDestination(
-            icon: Icon(Icons.school_outlined),
-            selectedIcon: Icon(Icons.school),
-            label: 'دوراتي',
+            icon: Icon(Icons.account_balance_wallet_outlined),
+            selectedIcon: Icon(Icons.account_balance_wallet),
+            label: 'محفظتي',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
@@ -784,26 +492,17 @@ class _ManhajHomeState extends State<ManhajHome> {
         _categoryStrip(),
         const SizedBox(height: 24),
         _sectionTitle(
-          'دورات مميزة',
-          '${_filtered.length} دورة',
+          'العملات الرائجة',
+          '${_filtered.length} عملة',
         ),
         const SizedBox(height: 12),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _filtered.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 14,
-            mainAxisSpacing: 14,
-            childAspectRatio: 0.72,
-          ),
-          itemBuilder: (_, i) => _CourseCard(
-            course: _filtered[i],
-            index: i,
-            onTap: () => _openCourse(_filtered[i]),
-          ),
-        ),
+        ..._filtered.asMap().entries.map(
+              (entry) => _CoinListTile(
+                coin: entry.value,
+                index: entry.key,
+                onTap: () => _openCoin(entry.value),
+              ),
+            ),
       ],
     );
   }
@@ -830,7 +529,7 @@ class _ManhajHomeState extends State<ManhajHome> {
               children: [
                 Text(
                   AppStore.username.isEmpty
-                      ? 'ابدأ رحلتك'
+                      ? 'ابدأ التداول'
                       : 'مرحباً ${AppStore.username}',
                   style: const TextStyle(
                     color: Colors.white70,
@@ -840,7 +539,7 @@ class _ManhajHomeState extends State<ManhajHome> {
                 ),
                 const SizedBox(height: 6),
                 const Text(
-                  'طوّر مهاراتك اليوم',
+                  'تابع أسعار العملات اليوم',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -859,7 +558,7 @@ class _ManhajHomeState extends State<ManhajHome> {
                       vertical: 12,
                     ),
                   ),
-                  child: const Text('تصفح الدورات'),
+                  child: const Text('استكشف السوق'),
                 ),
               ],
             ),
@@ -873,7 +572,7 @@ class _ManhajHomeState extends State<ManhajHome> {
               borderRadius: BorderRadius.circular(22),
             ),
             child: const Icon(
-              Icons.auto_stories_outlined,
+              Icons.currency_bitcoin,
               color: Colors.white,
               size: 40,
             ),
@@ -926,55 +625,55 @@ class _ManhajHomeState extends State<ManhajHome> {
     );
   }
 
-  Widget _exploreTab() {
+  Widget _marketTab() {
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
       children: [
         TextField(
           onChanged: (v) => setState(() => _query = v),
           decoration: const InputDecoration(
-            hintText: 'ابحث عن دورة أو مدرب',
+            hintText: 'ابحث عن عملة',
             prefixIcon: Icon(Icons.search),
           ),
         ),
         const SizedBox(height: 16),
         _categoryStrip(),
         const SizedBox(height: 24),
-        _sectionTitle('النتائج', '${_filtered.length} دورة'),
+        _sectionTitle('النتائج', '${_filtered.length} عملة'),
         const SizedBox(height: 12),
         if (_filtered.isEmpty)
           _emptyState('لا توجد نتائج مطابقة')
         else
           ..._filtered.asMap().entries.map(
-                (entry) => _CourseListTile(
-                  course: entry.value,
+                (entry) => _CoinListTile(
+                  coin: entry.value,
                   index: entry.key,
-                  onTap: () => _openCourse(entry.value),
+                  onTap: () => _openCoin(entry.value),
                 ),
               ),
       ],
     );
   }
 
-  Widget _myCoursesTab() {
-    final myCourses =
-        courses.where((c) => AppStore.enrolled.contains(c.id)).toList();
+  Widget _portfolioTab() {
+    final myCoins =
+        coins.where((c) => AppStore.portfolio.containsKey(c.id)).toList();
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
       children: [
         _statsRow(),
         const SizedBox(height: 24),
-        _sectionTitle('دوراتي', '${myCourses.length} دورة'),
+        _sectionTitle('محفظتي', '${myCoins.length} عملة'),
         const SizedBox(height: 12),
-        if (myCourses.isEmpty)
-          _emptyState('لم تسجل في أي دورة بعد')
+        if (myCoins.isEmpty)
+          _emptyState('لم تضف أي عملة إلى محفظتك بعد')
         else
-          ...myCourses.asMap().entries.map(
-                (entry) => _MyCourseTile(
-                  course: entry.value,
+          ...myCoins.asMap().entries.map(
+                (entry) => _PortfolioTile(
+                  coin: entry.value,
                   index: entry.key,
-                  onTap: () => _openCourse(entry.value),
+                  onTap: () => _openCoin(entry.value),
                 ),
               ),
       ],
@@ -986,28 +685,32 @@ class _ManhajHomeState extends State<ManhajHome> {
       children: [
         Expanded(
           child: _statCard(
-            icon: Icons.menu_book_outlined,
-            value: '${AppStore.enrolled.length}',
-            label: 'دورة مسجلة',
+            icon: Icons.account_balance_wallet_outlined,
+            value: '\$${AppStore.portfolioValue().toStringAsFixed(2)}',
+            label: 'قيمة المحفظة',
             color: AppTheme.primary,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _statCard(
-            icon: Icons.check_circle_outline,
-            value: '${AppStore.completedCoursesCount()}',
-            label: 'دورة مكتملة',
-            color: AppTheme.secondary,
+            icon: AppStore.portfolioChange() >= 0
+                ? Icons.trending_up
+                : Icons.trending_down,
+            value: '${AppStore.portfolioChange().toStringAsFixed(2)}%',
+            label: 'التغيير اليوم',
+            color: AppStore.portfolioChange() >= 0
+                ? AppTheme.primary
+                : AppTheme.secondary,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _statCard(
             icon: Icons.star_outline,
-            value: '${AppStore.totalPoints()}',
-            label: 'نقطة',
-            color: const Color(0xFF3EB489),
+            value: '${AppStore.watchlist.length}',
+            label: 'مراقبة',
+            color: const Color(0xFFFFB300),
           ),
         ),
       ],
@@ -1033,7 +736,7 @@ class _ManhajHomeState extends State<ManhajHome> {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -1089,7 +792,7 @@ class _ManhajHomeState extends State<ManhajHome> {
                   children: [
                     Text(
                       AppStore.username.isEmpty
-                          ? 'طالب'
+                          ? 'مستخدم'
                           : AppStore.username,
                       style: const TextStyle(
                         fontSize: 20,
@@ -1098,7 +801,7 @@ class _ManhajHomeState extends State<ManhajHome> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'متعلم في منهاج',
+                      'متداول في CryptoTrack',
                       style: TextStyle(
                         color:
                             Theme.of(context).colorScheme.onSurfaceVariant,
@@ -1120,7 +823,7 @@ class _ManhajHomeState extends State<ManhajHome> {
             children: [
               _settingsTile(
                 icon: Icons.dark_mode_outlined,
-                title: 'mycoin',
+                title: 'الوضع الليلي',
                 trailing: Switch.adaptive(
                   value: AppStore.isDark,
                   onChanged: (v) {
@@ -1132,14 +835,14 @@ class _ManhajHomeState extends State<ManhajHome> {
               const Divider(height: 1),
               _settingsTile(
                 icon: Icons.info_outline,
-                title: 'mycoin',
+                title: 'عن التطبيق',
                 trailing: const Icon(Icons.chevron_left),
                 onTap: () => _showAbout(),
               ),
               const Divider(height: 1),
               _settingsTile(
                 icon: Icons.delete_outline,
-                title: 'mycoin',
+                title: 'حذف كل البيانات',
                 titleColor: Colors.red,
                 iconColor: Colors.red,
                 trailing: const Icon(Icons.chevron_left),
@@ -1151,7 +854,7 @@ class _ManhajHomeState extends State<ManhajHome> {
         const SizedBox(height: 20),
         Center(
           child: Text(
-            'منهاج - الإصدار 1.0.0',
+            'CryptoTrack - الإصدار 1.0.0',
             style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontSize: 13,
@@ -1196,20 +899,20 @@ class _ManhajHomeState extends State<ManhajHome> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: const Icon(
-            Icons.school_outlined,
+            Icons.currency_bitcoin,
             color: Colors.white,
             size: 28,
           ),
         ),
         title: const Text(
-          'منهاج',
+          'CryptoTrack',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'منصة تعليمية تجريبية لعرض الدورات ومتابعة التقدم. جميع البيانات محفوظة على جهازك فقط.',
+              'تطبيق لتتبع أسعار العملات الرقمية وإدارة محفظتك الشخصية. جميع البيانات محفوظة على جهازك فقط.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -1242,7 +945,7 @@ class _ManhajHomeState extends State<ManhajHome> {
       builder: (dialogContext) => AlertDialog(
         title: const Text('حذف كل البيانات'),
         content: const Text(
-          'سيتم حذف كل الدورات المسجلة والتقدم واسم المستخدم. لا يمكن التراجع عن هذا الإجراء.',
+          'سيتم حذف كل بيانات المحفظة والعملات المراقبة واسم المستخدم. لا يمكن التراجع عن هذا الإجراء.',
         ),
         actions: [
           TextButton(
@@ -1253,8 +956,8 @@ class _ManhajHomeState extends State<ManhajHome> {
             onPressed: () async {
               await AppStore.prefs.clear();
               AppStore.username = '';
-              AppStore.enrolled = {};
-              AppStore.completed = {};
+              AppStore.watchlist = {};
+              AppStore.portfolio = {};
               AppStore.isDark = false;
               Navigator.pop(dialogContext);
               widget.onReset();
@@ -1269,7 +972,7 @@ class _ManhajHomeState extends State<ManhajHome> {
     );
   }
 
-  void _openCourse(Course course) {
+  void _openCoin(Coin coin) {
     Navigator.of(context)
         .push(
           PageRouteBuilder(
@@ -1277,7 +980,7 @@ class _ManhajHomeState extends State<ManhajHome> {
             reverseTransitionDuration: const Duration(milliseconds: 300),
             pageBuilder: (_, animation, __) => FadeTransition(
               opacity: animation,
-              child: CourseDetailScreen(course: course),
+              child: CoinDetailScreen(coin: coin),
             ),
             transitionsBuilder: (_, animation, __, child) {
               final curved = CurvedAnimation(
@@ -1335,223 +1038,21 @@ class _ManhajHomeState extends State<ManhajHome> {
   }
 }
 
-class _CourseCard extends StatelessWidget {
-  const _CourseCard({
-    required this.course,
+class _CoinListTile extends StatelessWidget {
+  const _CoinListTile({
+    required this.coin,
     required this.index,
     required this.onTap,
   });
 
-  final Course course;
+  final Coin coin;
   final int index;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final progress = AppStore.progress(course.id);
-    final enrolled = AppStore.enrolled.contains(course.id);
+    final isWatched = AppStore.watchlist.contains(coin.id);
 
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: 1),
-      duration: Duration(milliseconds: 350 + (index * 60)),
-      curve: Curves.easeOutCubic,
-      builder: (context, value, child) => Opacity(
-        opacity: value,
-        child: Transform.translate(
-          offset: Offset(0, 20 * (1 - value)),
-          child: child,
-        ),
-      ),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        course.color,
-                        course.color.withValues(alpha: 0.7),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: -14,
-                        right: -14,
-                        child: Icon(
-                          Icons.school_outlined,
-                          size: 90,
-                          color: Colors.white.withValues(alpha: 0.18),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.25),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                course.level,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            if (enrolled)
-                              TweenAnimationBuilder<double>(
-                                tween: Tween(begin: 0, end: progress),
-                                duration:
-                                    const Duration(milliseconds: 700),
-                                curve: Curves.easeOutCubic,
-                                builder: (_, value, __) => Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                      child: LinearProgressIndicator(
-                                        value: value,
-                                        minHeight: 5,
-                                        backgroundColor: Colors.white
-                                            .withValues(alpha: 0.3),
-                                        valueColor:
-                                            const AlwaysStoppedAnimation(
-                                          Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      '${(value * 100).toInt()}%',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      course.category,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurfaceVariant,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      course.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                        height: 1.3,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star_rounded,
-                          color: Color(0xFFFFB300),
-                          size: 16,
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          course.rating.toStringAsFixed(1),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Spacer(),
-                        Icon(
-                          Icons.access_time,
-                          size: 14,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 3),
-                        Text(
-                          '${course.hours}س',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CourseListTile extends StatelessWidget {
-  const _CourseListTile({
-    required this.course,
-    required this.index,
-    required this.onTap,
-  });
-
-  final Course course;
-  final int index;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
       duration: Duration(milliseconds: 300 + (index * 50)),
@@ -1581,16 +1082,21 @@ class _CourseListTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        course.color,
-                        course.color.withValues(alpha: 0.7),
+                        coin.change24h >= 0
+                            ? AppTheme.primary
+                            : AppTheme.secondary,
+                        (coin.change24h >= 0
+                                ? AppTheme.primary
+                                : AppTheme.secondary)
+                            .withValues(alpha: 0.7),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Icon(
-                    Icons.play_lesson_outlined,
+                  child: Icon(
+                    coin.icon,
                     color: Colors.white,
                     size: 28,
                   ),
@@ -1601,18 +1107,17 @@ class _CourseListTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        course.title,
-                        maxLines: 2,
+                        coin.name,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 14,
-                          height: 1.3,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        course.instructor,
+                        coin.symbol,
                         style: TextStyle(
                           fontSize: 12,
                           color: Theme.of(context)
@@ -1623,40 +1128,29 @@ class _CourseListTile extends StatelessWidget {
                       const SizedBox(height: 6),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.star_rounded,
-                            color: Color(0xFFFFB300),
+                          Icon(
+                            coin.change24h >= 0
+                                ? Icons.trending_up
+                                : Icons.trending_down,
+                            color: coin.change24h >= 0
+                                ? AppTheme.primary
+                                : AppTheme.secondary,
                             size: 14,
                           ),
                           const SizedBox(width: 3),
                           Text(
-                            course.rating.toStringAsFixed(1),
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Icon(
-                            Icons.access_time,
-                            size: 12,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
-                          ),
-                          const SizedBox(width: 3),
-                          Text(
-                            '${course.hours}س',
+                            '${coin.change24h.abs().toStringAsFixed(2)}%',
                             style: TextStyle(
                               fontSize: 11,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
+                              fontWeight: FontWeight.w700,
+                              color: coin.change24h >= 0
+                                  ? AppTheme.primary
+                                  : AppTheme.secondary,
                             ),
                           ),
                           const SizedBox(width: 10),
                           Icon(
-                            Icons.people_outline,
+                            Icons.category_outlined,
                             size: 12,
                             color: Theme.of(context)
                                 .colorScheme
@@ -1664,7 +1158,7 @@ class _CourseListTile extends StatelessWidget {
                           ),
                           const SizedBox(width: 3),
                           Text(
-                            '${course.students}',
+                            coin.category,
                             style: TextStyle(
                               fontSize: 11,
                               color: Theme.of(context)
@@ -1677,7 +1171,29 @@ class _CourseListTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_left),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '\$${coin.price.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    IconButton(
+                      onPressed: () {
+                        AppStore.toggleWatchlist(coin.id);
+                      },
+                      icon: Icon(
+                        isWatched ? Icons.star : Icons.star_border,
+                        color: isWatched ? const Color(0xFFFFB300) : null,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -1687,22 +1203,21 @@ class _CourseListTile extends StatelessWidget {
   }
 }
 
-class _MyCourseTile extends StatelessWidget {
-  const _MyCourseTile({
-    required this.course,
+class _PortfolioTile extends StatelessWidget {
+  const _PortfolioTile({
+    required this.coin,
     required this.index,
     required this.onTap,
   });
 
-  final Course course;
+  final Coin coin;
   final int index;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final progress = AppStore.progress(course.id);
-    final done = AppStore.completedLessonsCount(course.id);
-    final total = course.lessons.length;
+    final amount = AppStore.portfolio[coin.id] ?? 0;
+    final value = coin.price * amount;
 
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
@@ -1735,16 +1250,21 @@ class _MyCourseTile extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            course.color,
-                            course.color.withValues(alpha: 0.7),
+                            coin.change24h >= 0
+                                ? AppTheme.primary
+                                : AppTheme.secondary,
+                            (coin.change24h >= 0
+                                    ? AppTheme.primary
+                                    : AppTheme.secondary)
+                                .withValues(alpha: 0.7),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(14),
                       ),
-                      child: const Icon(
-                        Icons.school_outlined,
+                      child: Icon(
+                        coin.icon,
                         color: Colors.white,
                         size: 26,
                       ),
@@ -1755,7 +1275,7 @@ class _MyCourseTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            course.title,
+                            coin.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -1765,7 +1285,7 @@ class _MyCourseTile extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '$done من $total درس',
+                            '${amount.toStringAsFixed(4)} ${coin.symbol}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Theme.of(context)
@@ -1776,33 +1296,33 @@ class _MyCourseTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(
-                      '${(progress * 100).toInt()}%',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                        color: course.color,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '\$${value.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: coin.change24h >= 0
+                                ? AppTheme.primary
+                                : AppTheme.secondary,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${coin.change24h >= 0 ? "+" : ""}${coin.change24h.toStringAsFixed(2)}%',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: coin.change24h >= 0
+                                ? AppTheme.primary
+                                : AppTheme.secondary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-                const SizedBox(height: 12),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: progress),
-                    duration: const Duration(milliseconds: 900),
-                    curve: Curves.easeOutCubic,
-                    builder: (_, value, __) => LinearProgressIndicator(
-                      value: value,
-                      minHeight: 6,
-                      backgroundColor: Theme.of(context)
-                          .colorScheme
-                          .onSurfaceVariant
-                          .withValues(alpha: 0.1),
-                      valueColor: AlwaysStoppedAnimation(course.color),
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -1813,18 +1333,19 @@ class _MyCourseTile extends StatelessWidget {
   }
 }
 
-class CourseDetailScreen extends StatefulWidget {
-  const CourseDetailScreen({super.key, required this.course});
+class CoinDetailScreen extends StatefulWidget {
+  const CoinDetailScreen({super.key, required this.coin});
 
-  final Course course;
+  final Coin coin;
 
   @override
-  State<CourseDetailScreen> createState() => _CourseDetailScreenState();
+  State<CoinDetailScreen> createState() => _CoinDetailScreenState();
 }
 
-class _CourseDetailScreenState extends State<CourseDetailScreen>
+class _CoinDetailScreenState extends State<CoinDetailScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _anim;
+  final _amountController = TextEditingController();
 
   @override
   void initState() {
@@ -1838,14 +1359,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   @override
   void dispose() {
     _anim.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final course = widget.course;
-    final enrolled = AppStore.enrolled.contains(course.id);
-    final progress = AppStore.progress(course.id);
+    final coin = widget.coin;
+    final isWatched = AppStore.watchlist.contains(coin.id);
 
     return Scaffold(
       body: CustomScrollView(
@@ -1853,7 +1374,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           SliverAppBar(
             expandedHeight: 240,
             pinned: true,
-            backgroundColor: course.color,
+            backgroundColor: coin.change24h >= 0
+                ? AppTheme.primary
+                : AppTheme.secondary,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back),
@@ -1867,8 +1390,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      course.color,
-                      course.color.withValues(alpha: 0.75),
+                      coin.change24h >= 0
+                          ? AppTheme.primary
+                          : AppTheme.secondary,
+                      (coin.change24h >= 0
+                              ? AppTheme.primary
+                              : AppTheme.secondary)
+                          .withValues(alpha: 0.75),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -1880,7 +1408,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                       bottom: -30,
                       left: -30,
                       child: Icon(
-                        Icons.school_outlined,
+                        coin.icon,
                         size: 220,
                         color: Colors.white.withValues(alpha: 0.12),
                       ),
@@ -1902,7 +1430,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
-                                course.category,
+                                coin.category,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -1912,9 +1440,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              course.title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                              coin.name,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -1924,7 +1450,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              course.instructor,
+                              coin.symbol,
                               style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 14,
@@ -1958,61 +1484,49 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _infoGrid(course),
-                      if (enrolled) ...[
-                        const SizedBox(height: 20),
-                        _progressCard(progress),
-                      ],
+                      _infoGrid(coin),
                       const SizedBox(height: 24),
                       const Text(
-                        'عن الدورة',
+                        'أضف إلى محفظتك',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        course.description,
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).colorScheme.onSurfaceVariant,
-                          height: 1.7,
-                          fontSize: 14,
+                      TextField(
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'أدخل الكمية',
+                          prefixIcon: Icon(Icons.add_circle_outline),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          onPressed: () {
+                            final amount =
+                                double.tryParse(_amountController.text);
+                            if (amount != null && amount > 0) {
+                              AppStore.addToPortfolio(coin.id, amount);
+                              _amountController.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'تم إضافة ${amount.toStringAsFixed(4)} ${coin.symbol} إلى محفظتك',
+                                  ),
+                                  backgroundColor: AppTheme.primary,
+                                ),
+                              );
+                            }
+                          },
+                          icon: const Icon(Icons.add),
+                          label: const Text('إضافة إلى المحفظة'),
                         ),
                       ),
                       const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'محتوى الدورة',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          Text(
-                            '${course.lessons.length} درس',
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      ...course.lessons.asMap().entries.map(
-                            (e) => _lessonTile(
-                              course: course,
-                              lesson: e.value,
-                              index: e.key,
-                              enrolled: enrolled,
-                            ),
-                          ),
-                      const SizedBox(height: 100),
                     ],
                   ),
                 ),
@@ -2021,11 +1535,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           ),
         ],
       ),
-      bottomSheet: _bottomBar(course, enrolled),
+      bottomSheet: _bottomBar(coin, isWatched),
     );
   }
 
-  Widget _infoGrid(Course course) {
+  Widget _infoGrid(Coin coin) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
@@ -2035,31 +1549,28 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
       child: Row(
         children: [
           _infoItem(
-            icon: Icons.star_rounded,
-            value: course.rating.toStringAsFixed(1),
-            label: 'التقييم',
-            color: const Color(0xFFFFB300),
-          ),
-          _divider(),
-          _infoItem(
-            icon: Icons.people_outline,
-            value: '${course.students}',
-            label: 'طالب',
+            icon: Icons.attach_money,
+            value: '\$${coin.price.toStringAsFixed(2)}',
+            label: 'السعر',
             color: AppTheme.primary,
           ),
           _divider(),
           _infoItem(
-            icon: Icons.access_time,
-            value: '${course.hours}س',
-            label: 'المدة',
-            color: AppTheme.secondary,
+            icon: coin.change24h >= 0
+                ? Icons.trending_up
+                : Icons.trending_down,
+            value: '${coin.change24h.abs().toStringAsFixed(2)}%',
+            label: '24 ساعة',
+            color: coin.change24h >= 0
+                ? AppTheme.primary
+                : AppTheme.secondary,
           ),
           _divider(),
           _infoItem(
-            icon: Icons.signal_cellular_alt,
-            value: course.level,
-            label: 'المستوى',
-            color: const Color(0xFF3EB489),
+            icon: Icons.show_chart,
+            value: '\$${(coin.marketCap / 1000000000).toStringAsFixed(2)}B',
+            label: 'القيمة السوقية',
+            color: AppTheme.accent,
           ),
         ],
       ),
@@ -2107,183 +1618,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     );
   }
 
-  Widget _progressCard(double progress) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        gradient: AppTheme.primaryGradient,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 54,
-            height: 54,
-            child: TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0, end: progress),
-              duration: const Duration(milliseconds: 900),
-              curve: Curves.easeOutCubic,
-              builder: (_, value, __) => Stack(
-                alignment: Alignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    value: value,
-                    strokeWidth: 5,
-                    backgroundColor: Colors.white.withValues(alpha: 0.25),
-                    valueColor: const AlwaysStoppedAnimation(Colors.white),
-                  ),
-                  Text(
-                    '${(value * 100).toInt()}%',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'تقدمك في الدورة',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  progress >= 1.0
-                      ? 'أكملت الدورة بنجاح'
-                      : 'واصل التعلم للوصول إلى الإنجاز',
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _lessonTile({
-    required Course course,
-    required Lesson lesson,
-    required int index,
-    required bool enrolled,
-  }) {
-    final done = AppStore.isLessonCompleted(course.id, index);
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Material(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(18),
-        child: InkWell(
-          onTap: enrolled ? () => _openLesson(course, lesson, index) : null,
-          borderRadius: BorderRadius.circular(18),
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Row(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: done
-                        ? course.color
-                        : course.color.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Center(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: done
-                          ? const Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              key: ValueKey('done'),
-                            )
-                          : Text(
-                              '${index + 1}',
-                              key: const ValueKey('num'),
-                              style: TextStyle(
-                                color: course.color,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        lesson.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          decoration:
-                              done ? TextDecoration.lineThrough : null,
-                          color: done
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant
-                              : null,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.play_circle_outline,
-                            size: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${lesson.duration} دقيقة',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  Icons.chevron_left,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _bottomBar(Course course, bool enrolled) {
+  Widget _bottomBar(Coin coin, bool isWatched) {
     return Container(
       padding: EdgeInsets.fromLTRB(
         20,
@@ -2305,205 +1640,21 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
         width: double.infinity,
         child: FilledButton(
           onPressed: () {
-            AppStore.toggleEnroll(course.id);
+            AppStore.toggleWatchlist(coin.id);
             setState(() {});
           },
           style: FilledButton.styleFrom(
             backgroundColor:
-                enrolled ? Colors.red.withValues(alpha: 0.9) : course.color,
+                isWatched ? Colors.red.withValues(alpha: 0.9) : AppTheme.primary,
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           child: Text(
-            enrolled ? 'إلغاء التسجيل' : 'التسجيل في الدورة',
+            isWatched ? 'إزالة من المراقبة' : 'إضافة إلى المراقبة',
             style: const TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 15,
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  void _openLesson(Course course, Lesson lesson, int index) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => _LessonSheet(
-        course: course,
-        lesson: lesson,
-        index: index,
-        onChanged: () => setState(() {}),
-      ),
-    );
-  }
-}
-
-class _LessonSheet extends StatefulWidget {
-  const _LessonSheet({
-    required this.course,
-    required this.lesson,
-    required this.index,
-    required this.onChanged,
-  });
-
-  final Course course;
-  final Lesson lesson;
-  final int index;
-  final VoidCallback onChanged;
-
-  @override
-  State<_LessonSheet> createState() => _LessonSheetState();
-}
-
-class _LessonSheetState extends State<_LessonSheet> {
-  @override
-  Widget build(BuildContext context) {
-    final done = AppStore.isLessonCompleted(widget.course.id, widget.index);
-
-    return DraggableScrollableSheet(
-      initialChildSize: 0.7,
-      minChildSize: 0.5,
-      maxChildSize: 0.95,
-      expand: false,
-      builder: (context, controller) => Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(28),
-          ),
-        ),
-        child: ListView(
-          controller: controller,
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
-          children: [
-            Center(
-              child: Container(
-                width: 44,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurfaceVariant
-                      .withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Container(
-              height: 160,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    widget.course.color,
-                    widget.course.color.withValues(alpha: 0.7),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(22),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: -20,
-                    left: -20,
-                    child: Icon(
-                      Icons.play_circle_outline,
-                      size: 140,
-                      color: Colors.white.withValues(alpha: 0.15),
-                    ),
-                  ),
-                  const Center(
-                    child: Icon(
-                      Icons.play_circle_fill,
-                      color: Colors.white,
-                      size: 64,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'الدرس ${widget.index + 1}',
-              style: TextStyle(
-                color: widget.course.color,
-                fontWeight: FontWeight.w800,
-                fontSize: 13,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              widget.lesson.title,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-                height: 1.3,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Icon(
-                  Icons.access_time,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  '${widget.lesson.duration} دقيقة',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'محتوى الدرس',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              widget.lesson.content,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                height: 1.8,
-                fontSize: 14,
-              ),
-            ),
-            const SizedBox(height: 28),
-            FilledButton.icon(
-              onPressed: () {
-                AppStore.toggleLesson(widget.course.id, widget.index);
-                widget.onChanged();
-                setState(() {});
-              },
-              style: FilledButton.styleFrom(
-                backgroundColor: done
-                    ? Colors.red.withValues(alpha: 0.9)
-                    : widget.course.color,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              icon: Icon(
-                done ? Icons.close : Icons.check,
-              ),
-              label: Text(
-                done ? 'إلغاء الإكمال' : 'تحديد كمكتمل',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
